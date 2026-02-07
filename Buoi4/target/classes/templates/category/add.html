@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{_layout}">
+<head>
+    <title>Danh mục</title>
+</head>
+<body>
+<div layout:fragment="content" class="container">
+    <h2 class="mt-4" th:text="${category.id == 0 ? 'Thêm danh mục mới' : 'Chỉnh sửa danh mục'}"></h2>
+
+    <form th:action="@{/categories/add}" th:object="${category}" method="post" class="col-md-6">
+        <input type="hidden" th:field="*{id}">
+        <div class="mb-3">
+            <label class="form-label">Tên danh mục:</label>
+            <input type="text" th:field="*{name}" class="form-control" placeholder="Ví dụ: Phụ kiện">
+            <div class="alert alert-warning mt-2" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
+        </div>
+        <button type="submit" class="btn btn-primary" th:text="${category.id == 0 ? 'Thêm' : 'Cập nhật'}"></button>
+        <a th:href="@{/categories}" class="btn btn-secondary">Quay lại</a>
+    </form>
+</div>
+</body>
+</html>
