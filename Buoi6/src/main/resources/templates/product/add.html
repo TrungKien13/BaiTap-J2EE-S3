@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>QUẢN LÝ SẢN PHẨM</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+<nav class="navbar navbar-expand-sm bg-dark navbar-dark mb-4 shadow">
+    <div class="container-fluid">
+        <a class="navbar-brand fw-bold" th:href="@{/products}">J2EE SHOP</a>
+        <ul class="navbar-nav me-auto">
+            <li class="nav-item"><a class="nav-link active" th:href="@{/products}">Sản phẩm</a></li>
+            <li class="nav-item"><a class="nav-link" th:href="@{/categories}">Danh mục</a></li>
+        </ul>
+    </div>
+</nav>
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow border-0">
+                <div class="card-header bg-primary text-white py-3">
+                    <h5 class="mb-0 fw-bold" th:text="${product.id == 0} ? 'THÊM MỚI SẢN PHẨM' : 'CẬP NHẬT SẢN PHẨM'"></h5>
+                </div>
+                <div class="card-body p-4">
+                    <form th:action="@{/products/save}" th:object="${product}" method="post" enctype="multipart/form-data">
+                        <input type="hidden" th:field="*{id}">
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Tên sản phẩm</label>
+                            <input type="text" th:field="*{name}" class="form-control" placeholder="Nhập tên sản phẩm..." required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Giá bán (VNĐ)</label>
+                            <input type="number" th:field="*{price}" class="form-control" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Hình ảnh sản phẩm</label>
+
+                            <input type="text" th:field="*{image}" class="form-control mb-2" placeholder="Dán link ảnh tại đây...">
+
+                            <p class="text-center my-1 small text-muted">-- HOẶC --</p>
+
+                            <input type="file" name="imageFile" class="form-control" accept="image/*">
+
+                            <div th:if="${product.id != 0}" class="mt-2 text-center">
+                                <p class="small text-muted">Ảnh hiện tại:</p>
+                                <img th:src="${product.image}" width="100" class="rounded border shadow-sm">
+                            </div>
+                        </div>
+                        <div class="mb-4">
+                            <label class="form-label fw-bold">Danh mục</label>
+                            <select th:field="*{category.id}" class="form-select">
+                                <option th:each="c : ${categories}" th:value="${c.id}" th:text="${c.name}"></option>
+                            </select>
+                        </div>
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-success py-2 fw-bold">Lưu Thông Tin</button>
+                            <a th:href="@{/products}" class="btn btn-light border py-2 text-muted">Hủy Bỏ</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
